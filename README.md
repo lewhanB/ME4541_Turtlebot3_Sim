@@ -1,4 +1,4 @@
-# ME4541 TurtleBot3 Simulation
+# SLIIT - ME4541 TurtleBot3 Simulation
 
 A ROS 2 Jazzy workspace for simulating a **TurtleBot3 Burger** in Webots with
 the topic names, message types, and robot frames used by the hardware bringup.
