@@ -1,0 +1,16 @@
+TurtleBot3 Burger description and meshes
+
+The URDF and the four STL files in this package are derived from
+ROBOTIS-GIT/turtlebot3, turtlebot3_description version 2.3.6, distributed
+under the Apache License, Version 2.0. See LICENSE for the full license.
+
+Upstream: https://github.com/ROBOTIS-GIT/turtlebot3
+Installed source: /opt/ros/jazzy/share/turtlebot3_description
+Upstream authors: Darby Lim, Pyo, Will Son (ROBOTIS).
+
+Local modifications: expanded the Burger xacro with an empty namespace;
+changed mesh package references to robot_description. The physical
+geometry, inertia, joint names, and frame names are preserved.
+
+The CMake, package metadata, launch file, and RViz configuration are local
+additions distributed under the same Apache License, Version 2.0.

@@ -1,0 +1,236 @@
+#VRML_SIM R2025a utf8
+# SPDX-License-Identifier: Apache-2.0
+# Offline TurtleBot3 Burger model using the ROBOTIS description meshes.
+# Coordinates: x forward, y left, z up; Robot origin is base_footprint.
+# Wheel and sensor transforms match robot_description/urdf/turtlebot3_burger.urdf.
+# The collision geometry, mass distribution, and caster are approximations.
+
+PROTO TurtleBot3Burger [
+  field SFVec3f translation 0 0 0
+  field SFRotation rotation 0 0 1 0
+  field SFString name "TurtleBot3Burger"
+  field SFString controller "<extern>"
+  field MFString controllerArgs []
+  field SFBool synchronization TRUE
+] {
+  Robot {
+    translation IS translation
+    rotation IS rotation
+    name IS name
+    model "TurtleBot3 Burger"
+    controller IS controller
+    controllerArgs IS controllerArgs
+    synchronization IS synchronization
+    children [
+      Solid {
+        translation 0 0 0.01
+        name "base_link"
+        children [
+          Transform {
+            translation -0.032 0 0
+            scale 0.001 0.001 0.001
+            children [
+              Shape {
+                castShadows FALSE
+                appearance DEF BODY_APPEARANCE PBRAppearance {
+                  baseColor 0.4 0.4 0.4
+                  roughness 0.8
+                  metalness 0
+                }
+                geometry Mesh {
+                  url [ "meshes/burger_base.stl" ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+      HingeJoint {
+        jointParameters HingeJointParameters {
+          axis 0 1 0
+          anchor 0 0.08 0.033
+        }
+        device [
+          RotationalMotor {
+            name "left wheel motor"
+            maxVelocity 6.67
+            maxTorque 1
+          }
+          PositionSensor {
+            name "left wheel sensor"
+            resolution 0.0015339807878856412
+          }
+        ]
+        endPoint Solid {
+          translation 0 0.08 0.033
+          name "wheel_left_link"
+          contactMaterial "wheel"
+          children [
+            Transform {
+              scale 0.001 0.001 0.001
+              children [
+                Shape {
+                  appearance DEF WHEEL_APPEARANCE PBRAppearance {
+                    baseColor 0.12 0.12 0.12
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry Mesh {
+                    url [ "meshes/left_tire.stl" ]
+                  }
+                }
+              ]
+            }
+          ]
+          boundingObject Pose {
+            rotation 1 0 0 -1.5707963267948966
+            children [
+              Cylinder {
+                height 0.018
+                radius 0.033
+              }
+            ]
+          }
+          physics Physics {
+            density -1
+            mass 0.02849894
+          }
+        }
+      }
+      HingeJoint {
+        jointParameters HingeJointParameters {
+          axis 0 1 0
+          anchor 0 -0.08 0.033
+        }
+        device [
+          RotationalMotor {
+            name "right wheel motor"
+            maxVelocity 6.67
+            maxTorque 1
+          }
+          PositionSensor {
+            name "right wheel sensor"
+            resolution 0.0015339807878856412
+          }
+        ]
+        endPoint Solid {
+          translation 0 -0.08 0.033
+          name "wheel_right_link"
+          contactMaterial "wheel"
+          children [
+            Transform {
+              scale 0.001 0.001 0.001
+              children [
+                Shape {
+                  appearance USE WHEEL_APPEARANCE
+                  geometry Mesh {
+                    url [ "meshes/right_tire.stl" ]
+                  }
+                }
+              ]
+            }
+          ]
+          boundingObject Pose {
+            rotation 1 0 0 -1.5707963267948966
+            children [
+              Cylinder {
+                height 0.018
+                radius 0.033
+              }
+            ]
+          }
+          physics Physics {
+            density -1
+            mass 0.02849894
+          }
+        }
+      }
+      Solid {
+        translation -0.081 0 0.004
+        name "caster_back_link"
+        contactMaterial "caster"
+        children [
+          Shape {
+            appearance USE WHEEL_APPEARANCE
+            geometry DEF CASTER_SHAPE Sphere {
+              radius 0.004
+              subdivision 2
+            }
+          }
+        ]
+        boundingObject USE CASTER_SHAPE
+        physics Physics {
+          density -1
+          mass 0.005
+        }
+      }
+      Accelerometer {
+        translation -0.032 0 0.078
+        name "accelerometer"
+      }
+      Gyro {
+        translation -0.032 0 0.078
+        name "gyro"
+      }
+      InertialUnit {
+        translation -0.032 0 0.078
+        name "inertial_unit"
+      }
+      Lidar {
+        translation -0.032 0 0.182
+        name "LDS-01"
+        children [
+          Transform {
+            scale 0.001 0.001 0.001
+            children [
+              Shape {
+                appearance USE BODY_APPEARANCE
+                geometry Mesh {
+                  url [ "meshes/lds.stl" ]
+                }
+              }
+            ]
+          }
+        ]
+        horizontalResolution 360
+        fieldOfView 6.283185307179586
+        verticalFieldOfView 0.001
+        numberOfLayers 1
+        near 0.12
+        minRange 0.12
+        maxRange 3.5
+        type "fixed"
+        projection "cylindrical"
+        noise 0
+        resolution 0.001
+      }
+    ]
+    boundingObject Group {
+      children [
+        Pose {
+          translation -0.032 0 0.08
+          children [
+            Box {
+              size 0.14 0.14 0.143
+            }
+          ]
+        }
+        Pose {
+          translation -0.017 0 0.1755
+          children [
+            Cylinder {
+              radius 0.055
+              height 0.0315
+            }
+          ]
+        }
+      ]
+    }
+    physics Physics {
+      density -1
+      # Body and lidar masses; wheel and fixed caster masses are separate above.
+      mass 0.93973504
+      centerOfMass [ -0.032 0 0.08 ]
+    }
+  }
+}

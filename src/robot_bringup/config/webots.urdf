@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!-- Device configuration; the visual and TF model comes from robot_description. -->
+<robot name="turtlebot3_burger_webots">
+  <webots>
+    <device reference="LDS-01" type="Lidar">
+      <ros>
+        <enabled>true</enabled>
+        <updateRate>5</updateRate>
+        <topicName>/scan</topicName>
+        <alwaysOn>true</alwaysOn>
+        <frameName>base_scan</frameName>
+      </ros>
+    </device>
+    <device reference="compass" type="Compass">
+      <ros><enabled>false</enabled></ros>
+    </device>
+    <device reference="gps" type="GPS">
+      <ros><enabled>false</enabled></ros>
+    </device>
+    <plugin type="webots_ros2_driver::Ros2IMU">
+      <enabled>true</enabled>
+      <updateRate>20</updateRate>
+      <topicName>/imu</topicName>
+      <alwaysOn>true</alwaysOn>
+      <frameName>imu_link</frameName>
+      <inertialUnitName>inertial_unit</inertialUnitName>
+      <gyroName>gyro</gyroName>
+      <accelerometerName>accelerometer</accelerometerName>
+    </plugin>
+    <plugin type="robot_bringup.turtlebot3_driver.TurtleBot3Driver">
+      <enable_stamped_cmd_vel>true</enable_stamped_cmd_vel>
+      <enable_odom_tf>true</enable_odom_tf>
+      <command_timeout>0.5</command_timeout>
+      <publish_rate>20</publish_rate>
+      <battery_voltage>12.0</battery_voltage>
+      <battery_percentage>1.0</battery_percentage>
+    </plugin>
+  </webots>
+</robot>

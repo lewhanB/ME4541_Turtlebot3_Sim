@@ -1,0 +1,21 @@
+Offline TurtleBot3 Burger Webots model
+
+TurtleBot3Burger.proto is an independently written native Webots model,
+distributed under the Apache License, Version 2.0. It uses no external
+PROTOs or online assets. Its wheel dimensions and sensor transforms follow
+the local TurtleBot3 Burger robot description. Collision shapes, the fixed
+low-friction caster sphere, and mass distribution are approximations.
+
+The files in meshes/ are unmodified copies of the four meshes in
+robot_description/meshes. They are derived from ROBOTIS-GIT/turtlebot3,
+turtlebot3_description version 2.3.6, distributed under the Apache License,
+Version 2.0. See LICENSE for the full license.
+
+Upstream: https://github.com/ROBOTIS-GIT/turtlebot3
+Installed source: /opt/ros/jazzy/share/turtlebot3_description
+Upstream authors: Darby Lim, Pyo, Will Son (ROBOTIS).
+
+The model uses a fixed, full-circle, one-layer native Webots Lidar. Its
+complete ideal 360-point scan is sampled at the ROS driver update rate;
+individual rays have no rotating-head acquisition delay. Noise is disabled.
+The native sensor axes are x forward, y left, and z up.

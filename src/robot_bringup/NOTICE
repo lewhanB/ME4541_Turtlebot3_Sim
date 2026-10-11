@@ -1,0 +1,17 @@
+ME4541 TurtleBot3 Simulation
+
+The workspace code is distributed under the Apache License, Version 2.0.
+
+The Burger URDF and meshes are derived from ROBOTIS-GIT/turtlebot3,
+turtlebot3_description 2.3.6 (Apache License, Version 2.0).
+See src/robot_description/NOTICE and src/robot_bringup/protos/NOTICE.
+
+The furnished robot_world.wbt is adapted from the TurtleBot3 example world
+in Cyberbotics webots_ros2_turtlebot 2025.0.0, distributed under the Apache
+License, Version 2.0. Local changes align sensor positions with the ROS URDF.
+Upstream: https://github.com/cyberbotics/webots_ros2
+
+Remote Webots PROTOs and assets referenced by robot_world.wbt are not bundled
+in this repository. Those assets retain their respective upstream licenses,
+including the Cyberbotics Webots Assets License where applicable:
+https://cyberbotics.com/webots_assets_license
