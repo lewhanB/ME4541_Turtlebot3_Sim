@@ -5,12 +5,13 @@ the topic names, message types, and robot frames used by the hardware bringup.
 The default launch opens the furnished `robot_world.wbt` world, the robot
 controller, simulation clock, and robot state publisher. RViz is optional.
 
-The repository is a complete colcon workspace:
+Use `~/turtlebots3_ws` as the colcon workspace. Its source layout is:
 
 ```text
-src/
-  robot_description/  # Burger URDF, meshes, robot state publisher, RViz config
-  robot_bringup/      # Webots worlds, controller, launch files, interface checks
+turtlebots3_ws/
+  src/
+    robot_description/  # Burger URDF, meshes, robot state publisher, RViz config
+    robot_bringup/      # Webots worlds, controller, launch files, interface checks
 ```
 
 ## Requirements
@@ -47,12 +48,19 @@ rosdep update
 
 ## Clone and build
 
-Clone into your WSL home directory. The repository already contains `src/`, so
-build from the repository root:
+Create a new workspace at `~/turtlebots3_ws` using Git sparse checkout to
+retrieve only the `src/` directory. The repository's top-level README, LICENSE,
+and other root files are not checked out. Package licenses and notices inside
+`src/` remain with the packages. Git retains its `.git/` metadata for updates.
+
+Run these commands in WSL; the destination should not already contain a clone:
 
 ```bash
-git clone https://github.com/lewhanB/ME4541_Turtlebot3_Sim.git ~/ME4541_Turtlebot3_Sim
-cd ~/ME4541_Turtlebot3_Sim
+git clone --filter=blob:none --no-checkout --depth 1 \
+  https://github.com/lewhanB/ME4541_Turtlebot3_Sim.git ~/turtlebots3_ws
+cd ~/turtlebots3_ws
+git sparse-checkout set --no-cone '/src/'
+git checkout main
 source /opt/ros/jazzy/setup.bash
 rosdep install --from-paths src --ignore-src --rosdistro jazzy -r -y
 colcon build --symlink-install
@@ -69,7 +77,7 @@ are not needed to run this simulation.
 Run in a WSL terminal, adjusting `WEBOTS_HOME` if Webots is installed elsewhere:
 
 ```bash
-cd ~/ME4541_Turtlebot3_Sim
+cd ~/turtlebots3_ws
 source /opt/ros/jazzy/setup.bash
 source install/setup.bash
 export WEBOTS_HOME='/mnt/c/Program Files/Webots'
@@ -175,7 +183,7 @@ With the bringup running, open a second WSL terminal:
 
 ```bash
 source /opt/ros/jazzy/setup.bash
-source ~/ME4541_Turtlebot3_Sim/install/setup.bash
+source ~/turtlebots3_ws/install/setup.bash
 export TURTLEBOT3_MODEL=burger
 ros2 run turtlebot3_teleop teleop_keyboard
 ```
@@ -225,7 +233,7 @@ and [Burger bringup parameters](https://github.com/ROBOTIS-GIT/turtlebot3/blob/j
 ## Validation
 
 ```bash
-cd ~/ME4541_Turtlebot3_Sim
+cd ~/turtlebots3_ws
 source /opt/ros/jazzy/setup.bash
 source install/setup.bash
 colcon test --packages-select robot_bringup
